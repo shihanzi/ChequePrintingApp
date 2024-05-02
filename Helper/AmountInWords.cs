@@ -64,9 +64,7 @@ namespace ChequePrintingApp.Helper
                         words += "-" + unitsMap[intPart % 10];
                 }
             }
-
             return words;
         }
-
     }
 }
