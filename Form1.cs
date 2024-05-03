@@ -80,22 +80,13 @@ namespace ChequePrintingApp
                     string amount = row.Cells["Amount"].Value.ToString();
                     string originalDate = row.Cells["Date"].Value.ToString();
                     string formattedDate = FormatDateForCheque(originalDate) ;
-
-                    double amountValue = 0;
-                    if (double.TryParse(amount, out amountValue)) // Safely convert string to double.
-                    {
-                        // Convert the amount to words using the static method.
-                        string amountInWords = AmountInWords.NumberToWords(amountValue);
-                        // Now use `amountInWords` for printing or displaying.
-                        // Example: Using these variables in your print logic.
-                    }
+                    string amountInWords = AmountInWords.NumberToWords(Convert.ToDouble(amount));
 
                     // Adjust `x` and `y` to match your cheque layout
                     graphics.DrawString( payeeName, font, brush, 100, y);
                     graphics.DrawString(formattedDate, font, brush, 100, y + 20);
                     graphics.DrawString( amount, font, brush, 500, y + 60);
-                    graphics.DrawString(/*amountInWords*/"", font, brush, 100, y + 40);
-                   // graphics.DrawString(amountInWords, font, brush, 400, y + 100);
+                    graphics.DrawString(amountInWords, font, brush, 100, y + 40);
 
                     y += 60; // Increment y for the next row, adjust spacing as necessary
                 }
