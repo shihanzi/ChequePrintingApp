@@ -18,53 +18,68 @@ namespace ChequePrintingApp.Helper
 
             string words = "";
 
-            // Handle the whole part of the number
-            int intPart = (int)number;
+            // Extract the whole part and the cents part
+            int wholePart = (int)number;
+            int centsPart = (int)((number - wholePart) * 100);
 
-            // Handle fractional part
-            int decimalPart = (int)((number - intPart) * 100); // Assumes two decimal places
-            if (decimalPart > 0 && decimalPart < 100)
+            // Convert the whole part
+            words = ConvertWholeNumberToWords(wholePart);
+
+            // Append cents if there are any
+            if (centsPart > 0)
             {
-                words = NumberToWords(intPart) + " and " + NumberToWords(decimalPart) + " cents";
-                return words;
+                if (!string.IsNullOrEmpty(words))
+                    words += " and ";  // Adding 'and' before the cents part
+
+                words += ConvertWholeNumberToWords(centsPart) + " cents";
             }
 
-            if ((intPart / 1000000) > 0)
+            return words;
+        }
+
+        private static string ConvertWholeNumberToWords(int number)
+        {
+            if (number == 0)
+                return "";
+
+            string words = "";
+
+            if ((number / 1000000) > 0)
             {
-                words += NumberToWords(intPart / 1000000) + " million ";
-                intPart %= 1000000;
+                words += ConvertWholeNumberToWords(number / 1000000) + " million ";
+                number %= 1000000;
             }
 
-            if ((intPart / 1000) > 0)
+            if ((number / 1000) > 0)
             {
-                words += NumberToWords(intPart / 1000) + " thousand ";
-                intPart %= 1000;
+                words += ConvertWholeNumberToWords(number / 1000) + " thousand ";
+                number %= 1000;
             }
 
-            if ((intPart / 100) > 0)
+            if ((number / 100) > 0)
             {
-                words += NumberToWords(intPart / 100) + " hundred ";
-                intPart %= 100;
+                words += ConvertWholeNumberToWords(number / 100) + " hundred ";
+                number %= 100;
             }
 
-            if (intPart > 0)
+            if (number > 0)
             {
                 if (words != "")
-                    words += "and ";
+                    words += "and ";  // Correct placement of 'and'
 
                 var unitsMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
                 var tensMap = new[] { "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
 
-                if (intPart < 20)
-                    words += unitsMap[intPart];
+                if (number < 20)
+                    words += unitsMap[number];
                 else
                 {
-                    words += tensMap[intPart / 10];
-                    if ((intPart % 10) > 0)
-                        words += "-" + unitsMap[intPart % 10];
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0)
+                        words += "-" + unitsMap[number % 10];
                 }
             }
-            return words;
+            return words.Trim();
         }
     }
 }

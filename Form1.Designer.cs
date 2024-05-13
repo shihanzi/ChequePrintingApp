@@ -36,13 +36,14 @@
             printDocument1 = new System.Drawing.Printing.PrintDocument();
             PrintPreview = new PrintPreviewDialog();
             btnPrintPreview = new Button();
+            btn_Settings = new Button();
             ((System.ComponentModel.ISupportInitialize)dgv_Cheque).BeginInit();
             SuspendLayout();
             // 
             // btn_Print
             // 
             btn_Print.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btn_Print.Location = new Point(700, 465);
+            btn_Print.Location = new Point(781, 465);
             btn_Print.Name = "btn_Print";
             btn_Print.Size = new Size(104, 42);
             btn_Print.TabIndex = 0;
@@ -74,7 +75,7 @@
             // btn_Close
             // 
             btn_Close.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btn_Close.Location = new Point(825, 465);
+            btn_Close.Location = new Point(891, 465);
             btn_Close.Name = "btn_Close";
             btn_Close.Size = new Size(104, 42);
             btn_Close.TabIndex = 3;
@@ -99,7 +100,7 @@
             // btnPrintPreview
             // 
             btnPrintPreview.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnPrintPreview.Location = new Point(524, 465);
+            btnPrintPreview.Location = new Point(612, 465);
             btnPrintPreview.Name = "btnPrintPreview";
             btnPrintPreview.Size = new Size(148, 42);
             btnPrintPreview.TabIndex = 4;
@@ -107,11 +108,25 @@
             btnPrintPreview.UseVisualStyleBackColor = true;
             btnPrintPreview.Click += btnPrintPreview_Click;
             // 
+            // btn_Settings
+            // 
+            btn_Settings.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btn_Settings.BackColor = Color.Transparent;
+            btn_Settings.Image = (Image)resources.GetObject("btn_Settings.Image");
+            btn_Settings.Location = new Point(939, 6);
+            btn_Settings.Name = "btn_Settings";
+            btn_Settings.Size = new Size(56, 56);
+            btn_Settings.TabIndex = 5;
+            btn_Settings.UseVisualStyleBackColor = false;
+            btn_Settings.Click += btn_Settings_Click;
+            // 
             // frm_Cheque
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1037, 544);
+            Controls.Add(btn_Settings);
             Controls.Add(btnPrintPreview);
             Controls.Add(btn_Close);
             Controls.Add(label1);
@@ -134,5 +149,6 @@
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintPreviewDialog PrintPreview;
         private Button btnPrintPreview;
+        private Button btn_Settings;
     }
 }

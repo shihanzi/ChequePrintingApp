@@ -2,19 +2,20 @@ using ChequePrintingApp.Helper;
 using ClosedXML.Excel;
 using System;
 using System.Data;
+using System.Text.Json;
 
 namespace ChequePrintingApp
 {
     public partial class frm_Cheque : Form
     {
         string filePath = @"C:\Journal\text.xlsx";
-        DateTime numericDate;
         public frm_Cheque()
         {
             InitializeComponent();
             LoadDataIntoDataGridView(filePath);
             InitializeDataGridView();
             SetDefaultCheckboxState();
+            SetupPrintDocument();
         }
         private void LoadDataIntoDataGridView(string filePath)
         {
@@ -66,7 +67,9 @@ namespace ChequePrintingApp
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Graphics graphics = e.Graphics;
-            Font font = new Font("Arial", 12);
+            PrintSettings printSettings = new PrintSettings();
+            PrintSettings settings = LoadSettings();
+            Font font = new Font("Arial", 15);
             Brush brush = Brushes.Black;
             float y = 100; // Start point for y, adjust as needed
 
@@ -79,27 +82,35 @@ namespace ChequePrintingApp
                     string payeeName = row.Cells["Name"].Value.ToString();
                     string amount = row.Cells["Amount"].Value.ToString();
                     string originalDate = row.Cells["Date"].Value.ToString();
-                    string formattedDate = FormatDateForCheque(originalDate) ;
+                    string formattedDate = FormatDateForCheque(originalDate);
                     string amountInWords = AmountInWords.NumberToWords(Convert.ToDouble(amount));
 
                     // Adjust `x` and `y` to match your cheque layout
-                    graphics.DrawString( payeeName, font, brush, 100, y);
-                    graphics.DrawString(formattedDate, font, brush, 100, y + 20);
-                    graphics.DrawString( amount, font, brush, 500, y + 60);
-                    graphics.DrawString(amountInWords, font, brush, 100, y + 40);
+                    graphics.DrawString(payeeName, font, brush, settings.NameX, settings.NameY);
+                    graphics.DrawString(formattedDate, font, brush, settings.DateX, /*y*/ + settings.DateY);
+                    graphics.DrawString(amount, font, brush, settings.AmountX, /*y*/ + settings.AmountY);
+                    graphics.DrawString(amountInWords + " only", font, brush, settings.WordsX, /*y*/ + settings.WordsY);
 
-                    y += 60; // Increment y for the next row, adjust spacing as necessary
+                    //y += 60; // Increment y for the next row, adjust spacing as necessary
                 }
             }
         }
 
         private void btn_Print_Click(object sender, EventArgs e)
         {
-            printDocument1.Print();
+            SetupPrintDocument(); // Ensure settings are applied before printing
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = printDocument1;
+
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
         }
 
         private void btnPrintPreview_Click(object sender, EventArgs e)
         {
+            SetupPrintDocument();
             PrintPreview.Document = printDocument1;
             PrintPreview.ShowDialog();
         }
@@ -128,6 +139,47 @@ namespace ChequePrintingApp
 
             // Insert spaces between each character
             return string.Join(" ", numericDate);
+        }
+
+        private void SetupPrintDocument()
+        {
+            // Assuming printDocument1 is your PrintDocument component
+            printDocument1.DefaultPageSettings.Landscape = true;
+        }
+
+        private void btn_Settings_Click(object sender, EventArgs e)
+        {
+            SettingsForm sf = new SettingsForm();
+            sf.ShowDialog();
+        }
+
+        public static PrintSettings LoadSettings()
+        {
+            string fileName = Path.Combine(@"C:\Journal", "printSettings.json");
+            if (!File.Exists(fileName))
+            {
+                MessageBox.Show("Default settings loaded. Configuration file not found.");
+                return new PrintSettings(); // Return default settings if no config file found
+            }
+
+            try
+            {
+                string jsonString = File.ReadAllText(fileName);
+                return JsonSerializer.Deserialize<PrintSettings>(jsonString);
+            }
+            catch (JsonException je)
+            {
+                MessageBox.Show("Error parsing settings: " + je.Message);
+                return new PrintSettings(); // Return default if parsing fails
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading settings: " + ex.Message);
+                return new PrintSettings(); // Return default if any other error
+            }
+
+            //string jsonString = File.ReadAllText("printSettings.json");
+            //return JsonSerializer.Deserialize<PrintSettings>(jsonString);
         }
     }
 }
