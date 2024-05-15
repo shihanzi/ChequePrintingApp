@@ -112,10 +112,11 @@
             // 
             btn_Settings.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btn_Settings.BackColor = Color.Transparent;
-            btn_Settings.Image = (Image)resources.GetObject("btn_Settings.Image");
-            btn_Settings.Location = new Point(939, 6);
+            btn_Settings.BackgroundImage = (Image)resources.GetObject("btn_Settings.BackgroundImage");
+            btn_Settings.BackgroundImageLayout = ImageLayout.Stretch;
+            btn_Settings.Location = new Point(960, 25);
             btn_Settings.Name = "btn_Settings";
-            btn_Settings.Size = new Size(56, 56);
+            btn_Settings.Size = new Size(35, 31);
             btn_Settings.TabIndex = 5;
             btn_Settings.UseVisualStyleBackColor = false;
             btn_Settings.Click += btn_Settings_Click;

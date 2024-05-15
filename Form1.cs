@@ -177,9 +177,6 @@ namespace ChequePrintingApp
                 MessageBox.Show("Error loading settings: " + ex.Message);
                 return new PrintSettings(); // Return default if any other error
             }
-
-            //string jsonString = File.ReadAllText("printSettings.json");
-            //return JsonSerializer.Deserialize<PrintSettings>(jsonString);
         }
     }
 }
