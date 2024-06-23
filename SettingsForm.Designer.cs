@@ -48,6 +48,10 @@
             nudWordY = new NumericUpDown();
             label11 = new Label();
             nudWordX = new NumericUpDown();
+            label9 = new Label();
+            nudAccPayeeY = new NumericUpDown();
+            label12 = new Label();
+            nudAccPayeeX = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)nudNameX).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudNameY).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudDateY).BeginInit();
@@ -57,6 +61,8 @@
             ((System.ComponentModel.ISupportInitialize)nudWordFontSize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudWordY).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudWordX).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudAccPayeeY).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudAccPayeeX).BeginInit();
             SuspendLayout();
             // 
             // btn_Save
@@ -198,7 +204,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label8.Location = new Point(325, 172);
+            label8.Location = new Point(325, 265);
             label8.Name = "label8";
             label8.Size = new Size(76, 21);
             label8.TabIndex = 22;
@@ -207,7 +213,7 @@
             // nudWordFontSize
             // 
             nudWordFontSize.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            nudWordFontSize.Location = new Point(440, 170);
+            nudWordFontSize.Location = new Point(440, 263);
             nudWordFontSize.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             nudWordFontSize.Name = "nudWordFontSize";
             nudWordFontSize.Size = new Size(120, 29);
@@ -251,11 +257,53 @@
             nudWordX.Size = new Size(120, 29);
             nudWordX.TabIndex = 15;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label9.Location = new Point(324, 215);
+            label9.Name = "label9";
+            label9.Size = new Size(93, 21);
+            label9.TabIndex = 26;
+            label9.Text = "AccPayee Y";
+            // 
+            // nudAccPayeeY
+            // 
+            nudAccPayeeY.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            nudAccPayeeY.Location = new Point(439, 213);
+            nudAccPayeeY.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            nudAccPayeeY.Name = "nudAccPayeeY";
+            nudAccPayeeY.Size = new Size(120, 29);
+            nudAccPayeeY.TabIndex = 25;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label12.Location = new Point(324, 168);
+            label12.Name = "label12";
+            label12.Size = new Size(94, 21);
+            label12.TabIndex = 24;
+            label12.Text = "AccPayee X";
+            // 
+            // nudAccPayeeX
+            // 
+            nudAccPayeeX.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            nudAccPayeeX.Location = new Point(439, 166);
+            nudAccPayeeX.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            nudAccPayeeX.Name = "nudAccPayeeX";
+            nudAccPayeeX.Size = new Size(120, 29);
+            nudAccPayeeX.TabIndex = 23;
+            // 
             // SettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(640, 450);
+            Controls.Add(label9);
+            Controls.Add(nudAccPayeeY);
+            Controls.Add(label12);
+            Controls.Add(nudAccPayeeX);
             Controls.Add(label8);
             Controls.Add(nudWordFontSize);
             Controls.Add(label10);
@@ -287,6 +335,8 @@
             ((System.ComponentModel.ISupportInitialize)nudWordFontSize).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudWordY).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudWordX).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudAccPayeeY).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudAccPayeeX).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -313,5 +363,9 @@
         private NumericUpDown nudWordY;
         private Label label11;
         private NumericUpDown nudWordX;
+        private Label label9;
+        private NumericUpDown nudAccPayeeY;
+        private Label label12;
+        private NumericUpDown nudAccPayeeX;
     }
 }

@@ -16,7 +16,7 @@ namespace ChequePrintingApp
 
         public static PrintSettings LoadSettings()
         {
-            string fileName = Path.Combine(@"C:\Journal", "printSettings.json");
+            string fileName = Path.Combine(@"C:\easypack", "printSettings.json");
             if (!File.Exists(fileName))
             {
                 MessageBox.Show("Default settings loaded. Configuration file not found.");
@@ -45,8 +45,7 @@ namespace ChequePrintingApp
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            string fileName = Path.Combine(@"C:\Journal", "printSettings.json");
-            //MessageBox.Show("Using file path: " + fileName);
+            string fileName = Path.Combine(@"C:\easypack", "printSettings.json");
             PrintSettings settings = new PrintSettings()
             {
                 NameX = (float)nudNameX.Value,
@@ -57,6 +56,8 @@ namespace ChequePrintingApp
                 AmountY = (float)nudAmountY.Value,
                 WordsX = (float)nudWordX.Value,
                 WordsY = (float)nudWordY.Value,
+                accPayeeX = (float)nudAccPayeeX.Value,
+                accPayeeY = (float)nudAccPayeeY.Value,
                 FontSize = (float)nudWordFontSize.Value
             };
 
@@ -85,6 +86,8 @@ namespace ChequePrintingApp
             SetNumericUpDownValue(nudAmountY, (decimal)settings.AmountY);
             SetNumericUpDownValue(nudWordX, (decimal)settings.WordsX);
             SetNumericUpDownValue(nudWordY, (decimal)settings.WordsY);
+            SetNumericUpDownValue(nudAccPayeeX, (decimal)settings.accPayeeX);
+            SetNumericUpDownValue(nudAccPayeeY, (decimal)settings.accPayeeY);
             SetNumericUpDownValue(nudWordFontSize, (decimal)settings.FontSize);
         }
         private void SetNumericUpDownValue(NumericUpDown numericUpDown, decimal value)

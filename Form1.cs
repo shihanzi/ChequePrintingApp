@@ -2,13 +2,14 @@ using ChequePrintingApp.Helper;
 using ClosedXML.Excel;
 using System;
 using System.Data;
+using System.Globalization;
 using System.Text.Json;
 
 namespace ChequePrintingApp
 {
     public partial class frm_Cheque : Form
     {
-        string filePath = @"C:\Journal\text.xlsx";
+        string filePath = @"C:\easypack\text.xlsx";
         public frm_Cheque()
         {
             InitializeComponent();
@@ -78,18 +79,38 @@ namespace ChequePrintingApp
                 bool isSelected = Convert.ToBoolean(row.Cells["checkBoxColumn"].Value);
                 if (isSelected)
                 {
+                    DateTime date;
+                    string slFormatDate = string.Empty;
                     // Example: Print each row's data
                     string payeeName = row.Cells["Name"].Value.ToString();
-                    string amount = row.Cells["Amount"].Value.ToString();
+                    double amountValue = Convert.ToDouble(row.Cells["Amount"].Value);
+                    string amount = amountValue.ToString("F2");
                     string originalDate = row.Cells["Date"].Value.ToString();
-                    string formattedDate = FormatDateForCheque(originalDate);
+                    string formattedDate = FormatDateForCheque(slFormatDate);
                     string amountInWords = AmountInWords.NumberToWords(Convert.ToDouble(amount));
+
+                    
+                    if (DateTime.TryParseExact(originalDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                    {
+                        slFormatDate = date.ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid date format in cell.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     // Adjust `x` and `y` to match your cheque layout
                     graphics.DrawString(payeeName, font, brush, settings.NameX, settings.NameY);
-                    graphics.DrawString(formattedDate, font, brush, settings.DateX, /*y*/ + settings.DateY);
-                    graphics.DrawString(amount, font, brush, settings.AmountX, /*y*/ + settings.AmountY);
-                    graphics.DrawString(amountInWords + " only", font, brush, settings.WordsX, /*y*/ + settings.WordsY);
+                    graphics.DrawString(slFormatDate, font, brush, settings.DateX, +settings.DateY);
+                    graphics.DrawString(amount, font, brush, settings.AmountX, +settings.AmountY);
+                    graphics.DrawString(amountInWords + " only", font, brush, settings.WordsX, +settings.WordsY);
+                    
+                    if (chkAccPayeeOnly.Checked)
+                    {
+                        string accPayeeOnly = "A/C Payee Only";
+                        graphics.DrawString(accPayeeOnly, font, brush, settings.accPayeeX, +settings.accPayeeX);
+                    }
 
                     //y += 60; // Increment y for the next row, adjust spacing as necessary
                 }
@@ -155,7 +176,7 @@ namespace ChequePrintingApp
 
         public static PrintSettings LoadSettings()
         {
-            string fileName = Path.Combine(@"C:\Journal", "printSettings.json");
+            string fileName = Path.Combine(@"C:\easypack", "printSettings.json");
             if (!File.Exists(fileName))
             {
                 MessageBox.Show("Default settings loaded. Configuration file not found.");
@@ -178,5 +199,7 @@ namespace ChequePrintingApp
                 return new PrintSettings(); // Return default if any other error
             }
         }
+
+
     }
 }

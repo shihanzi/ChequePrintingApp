@@ -37,6 +37,7 @@
             PrintPreview = new PrintPreviewDialog();
             btnPrintPreview = new Button();
             btn_Settings = new Button();
+            chkAccPayeeOnly = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)dgv_Cheque).BeginInit();
             SuspendLayout();
             // 
@@ -121,12 +122,24 @@
             btn_Settings.UseVisualStyleBackColor = false;
             btn_Settings.Click += btn_Settings_Click;
             // 
+            // chkAccPayeeOnly
+            // 
+            chkAccPayeeOnly.AutoSize = true;
+            chkAccPayeeOnly.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            chkAccPayeeOnly.Location = new Point(458, 475);
+            chkAccPayeeOnly.Name = "chkAccPayeeOnly";
+            chkAccPayeeOnly.Size = new Size(136, 25);
+            chkAccPayeeOnly.TabIndex = 6;
+            chkAccPayeeOnly.Text = "A/C Payee Only";
+            chkAccPayeeOnly.UseVisualStyleBackColor = true;
+            // 
             // frm_Cheque
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1037, 544);
+            Controls.Add(chkAccPayeeOnly);
             Controls.Add(btn_Settings);
             Controls.Add(btnPrintPreview);
             Controls.Add(btn_Close);
@@ -151,5 +164,6 @@
         private PrintPreviewDialog PrintPreview;
         private Button btnPrintPreview;
         private Button btn_Settings;
+        private CheckBox chkAccPayeeOnly;
     }
 }
